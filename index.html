@@ -29,6 +29,7 @@
             --light: #f8fafc;
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
         }
         
         * {
@@ -127,6 +128,9 @@
             position: relative;
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         
         .offer-card::before {
@@ -377,6 +381,39 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
+        /* Цвета для счетчиков остатков бонусов */
+        .bonus-count-low {
+            color: #ef4444;
+            font-weight: bold;
+        }
+        
+        .bonus-count-medium {
+            color: #f59e0b;
+            font-weight: bold;
+        }
+        
+        .bonus-count-high {
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        /* Фиксированная высота для элементов карточек */
+        .offer-header {
+            min-height: 100px;
+        }
+        
+        .offer-bonus {
+            min-height: 100px;
+        }
+        
+        .offer-details {
+            min-height: 80px;
+        }
+        
+        .offer-footer {
+            min-height: 60px;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -546,14 +583,6 @@
                 
                 <div class="glass p-6 rounded-2xl hover-lift">
                     <div class="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center mb-6">
-                        <i class="fas fa-headset text-2xl text-black"></i>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3">Поддержка 24/7</h3>
-                    <p class="text-gray-400">Наша команда всегда на связи. Поможем с любым вопросом в любое время суток.</p>
-                </div>
-                
-                <div class="glass p-6 rounded-2xl hover-lift">
-                    <div class="w-14 h-14 rounded-xl gradient-primary flex items-center justify-center mb-6">
                         <i class="fas fa-chart-line text-2xl text-black"></i>
                     </div>
                     <h3 class="text-xl font-bold mb-3">Максимальная выгода</h3>
@@ -575,6 +604,8 @@
                     <h3 class="text-xl font-bold mb-3">Для всех стран</h3>
                     <p class="text-gray-400">Подбираем офферы специально для вашей страны. Никаких ограничений по геолокации.</p>
                 </div>
+                
+                <!-- Удален блок "Поддержка 24/7" -->
             </div>
         </section>
 
@@ -630,28 +661,34 @@
                     <div class="text-center mb-10">
                         <div class="inline-flex items-center px-4 py-2 rounded-full bg-red-900/30 border border-red-700/50 mb-6">
                             <i class="fas fa-exclamation-triangle text-red-400 mr-2"></i>
-                            <span class="text-red-300 font-semibold">Внимание! Ограниченное количество</span>
+                            <span class="text-red-300 font-semibold">СРОЧНО! Количество ограничено</span>
                         </div>
                         
                         <h2 class="text-3xl md:text-4xl font-bold mb-4">Бонусы заканчиваются!</h2>
                         <p class="text-gray-300 max-w-2xl mx-auto text-lg">
-                            VIP-офферы обновляются каждые 24 часа. 
-                            <span class="text-primary font-medium">Не упустите момент!</span>
-                            Выбирайте лучшее предложение сейчас, пока другие игроки не заняли ваше место.
+                            <span class="text-primary font-medium">VIP-офферы строго ограничены!</span> 
+                            На каждое предложение выделено фиксированное количество бонусов. 
+                            <span class="text-red-300 font-medium">Когда бонусы заканчиваются — доступ закрывается навсегда.</span>
+                            Не упустите последний шанс забрать эксклюзивное предложение!
                         </p>
                     </div>
                     
                     <!-- Индикатор доступности -->
                     <div class="max-w-2xl mx-auto mb-10">
                         <div class="flex justify-between text-sm text-gray-400 mb-2">
-                            <span>Доступно офферов: <span class="text-primary font-bold" id="available-offers">8</span></span>
-                            <span>Осталось времени: <span id="remaining-time" class="text-red-300 font-bold">23:59:59</span></span>
+                            <span>Свободных мест: <span class="text-primary font-bold" id="available-offers">8</span></span>
+                            <span>До обновления: <span id="remaining-time" class="text-red-300 font-bold">23:59:59</span></span>
                         </div>
                         <div class="progress-bar">
-                            <div class="progress-fill" style="width: 40%"></div>
+                            <div class="progress-fill" style="width: 25%"></div>
+                        </div>
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Осталось мало мест</span>
+                            <span>Места заканчиваются</span>
                         </div>
                         <p class="text-gray-500 text-sm mt-3 text-center">
-                            Каждый час количество доступных бонусов уменьшается. Не откладывайте на потом!
+                            <i class="fas fa-exclamation-circle text-red-400 mr-1"></i>
+                            Когда места закончатся — новые бонусы появятся только через 24 часа!
                         </p>
                     </div>
                     
@@ -661,9 +698,12 @@
                             onclick="scrollToOffers()"
                             class="btn-primary text-xl py-5 px-16 animate-pulse-subtle"
                         >
-                            <i class="fas fa-crown mr-3"></i>Выбрать бонус прямо сейчас
+                            <i class="fas fa-crown mr-3"></i>Забрать последние бонусы
                         </button>
-                        <p class="text-gray-500 text-sm mt-4">Не откладывайте — лучшие условия доступны только в течение ограниченного времени</p>
+                        <p class="text-gray-500 text-sm mt-4">
+                            <i class="fas fa-clock text-red-400 mr-1"></i>
+                            Не откладывайте — следующие эксклюзивные предложения появятся только завтра
+                        </p>
                     </div>
                 </div>
             </div>
@@ -765,6 +805,23 @@
 
     <!-- JavaScript для интерактивности -->
     <script>
+        // Функция для генерации случайного количества бонусов (фиксированные значения)
+        function generateFixedBonusCounts() {
+            // Фиксированные значения для каждой карточки
+            return [4, 15, 32, 7, 12, 28, 9, 18];
+        }
+        
+        // Функция для определения класса цвета на основе количества
+        function getBonusColorClass(count) {
+            if (count < 10) {
+                return 'bonus-count-low';
+            } else if (count < 30) {
+                return 'bonus-count-medium';
+            } else {
+                return 'bonus-count-high';
+            }
+        }
+        
         // Данные офферов с категориями
         const offers = [
             {
@@ -777,7 +834,6 @@
                 limited: true,
                 href: 'https://example.com/offer1',
                 color: 'from-purple-500 to-pink-500',
-                remaining: Math.floor(Math.random() * 20) + 5,
                 rating: 4.8,
                 minDeposit: '500₽',
                 popular: true,
@@ -793,7 +849,6 @@
                 limited: true,
                 href: 'https://example.com/offer2',
                 color: 'from-blue-500 to-cyan-500',
-                remaining: Math.floor(Math.random() * 15) + 3,
                 rating: 4.9,
                 minDeposit: '300₽',
                 popular: true,
@@ -809,7 +864,6 @@
                 limited: true,
                 href: 'https://example.com/offer3',
                 color: 'from-green-500 to-emerald-500',
-                remaining: Math.floor(Math.random() * 25) + 8,
                 rating: 4.7,
                 minDeposit: '1000₽',
                 categories: ['cashback']
@@ -824,7 +878,6 @@
                 limited: true,
                 href: 'https://example.com/offer4',
                 color: 'from-red-500 to-orange-500',
-                remaining: Math.floor(Math.random() * 10) + 2,
                 rating: 4.6,
                 minDeposit: '200₽',
                 popular: true,
@@ -840,7 +893,6 @@
                 limited: true,
                 href: 'https://example.com/offer5',
                 color: 'from-yellow-500 to-amber-500',
-                remaining: Math.floor(Math.random() * 18) + 6,
                 rating: 4.5,
                 minDeposit: '500₽',
                 categories: ['nodeposit', 'freespins']
@@ -855,7 +907,6 @@
                 limited: true,
                 href: 'https://example.com/offer6',
                 color: 'from-red-600 to-pink-600',
-                remaining: Math.floor(Math.random() * 12) + 4,
                 rating: 4.8,
                 minDeposit: '100₽',
                 categories: ['cashback', 'nodeposit']
@@ -870,7 +921,6 @@
                 limited: true,
                 href: 'https://example.com/offer7',
                 color: 'from-gray-500 to-slate-500',
-                remaining: Math.floor(Math.random() * 22) + 7,
                 rating: 4.7,
                 minDeposit: '300₽',
                 categories: ['fast']
@@ -885,7 +935,6 @@
                 limited: true,
                 href: 'https://example.com/offer8',
                 color: 'from-cyan-500 to-blue-500',
-                remaining: Math.floor(Math.random() * 16) + 5,
                 rating: 4.9,
                 minDeposit: '250₽',
                 popular: true,
@@ -902,6 +951,14 @@
         // Текущий активный фильтр
         let activeFilter = 'all';
         
+        // Фиксированные количества бонусов
+        const fixedBonusCounts = generateFixedBonusCounts();
+        
+        // Добавляем фиксированные количества к офферам
+        offers.forEach((offer, index) => {
+            offer.bonusCount = fixedBonusCounts[index] || 15;
+        });
+
         // Функция для отправки событий в dataLayer
         function pushToDataLayer(eventName, offerId = null, source = null) {
             const eventData = {
@@ -922,6 +979,13 @@
         function handleOfferClick(offerId, offerHref) {
             const offer = offers.find(o => o.id === offerId);
             selectedOffer = offer;
+            
+            // Уменьшаем количество доступных бонусов при клике
+            if (offer.bonusCount > 0) {
+                offer.bonusCount--;
+                // Перерисовываем офферы, чтобы обновить счетчик
+                renderOffers();
+            }
             
             pushToDataLayer('offer_click', offerId, 'offer_card');
             
@@ -1005,13 +1069,18 @@
             // Обновляем счетчик доступных офферов
             const availableOffersElement = document.getElementById('available-offers');
             if (availableOffersElement) {
-                availableOffersElement.textContent = filteredOffers.length;
+                // Подсчитываем офферы, у которых еще есть бонусы
+                const availableCount = filteredOffers.filter(offer => offer.bonusCount > 0).length;
+                availableOffersElement.textContent = availableCount;
             }
             
             // Добавляем каждый оффер
             filteredOffers.forEach((offer, index) => {
                 const offerElement = document.createElement('div');
-                offerElement.className = `offer-card glass rounded-2xl p-5 flex flex-col justify-between fade-in`;
+                offerElement.className = `offer-card glass rounded-2xl p-5`;
+                
+                // Определяем класс цвета для счетчика бонусов
+                const bonusColorClass = getBonusColorClass(offer.bonusCount);
                 
                 // Устанавливаем задержку для анимации
                 setTimeout(() => {
@@ -1019,9 +1088,9 @@
                 }, index * 100);
                 
                 offerElement.innerHTML = `
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
+                    <div class="offer-header mb-4">
+                        <div class="flex justify-between items-start">
+                            <div class="flex-1">
                                 <div class="flex items-center mb-2">
                                     <span class="vip-badge text-xs px-3 py-1 rounded-full mr-2">${offer.badge}</span>
                                     ${offer.popular ? '<span class="text-xs bg-red-900/50 text-red-300 px-2 py-1 rounded">Популярный</span>' : ''}
@@ -1035,24 +1104,25 @@
                                 </div>
                             </div>
                             
-                            ${offer.limited ? 
-                                '<div class="flex flex-col items-end">' +
-                                '<span class="text-xs text-red-400 mb-1">Ограничено</span>' +
-                                `<div class="text-sm font-bold text-white">${offer.remaining} мест</div>` +
-                                '</div>' : ''}
-                        </div>
-                        
-                        <div class="mb-6">
-                            <div class="text-3xl font-bold text-center mb-2" style="background: linear-gradient(135deg, ${offer.color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                                ${offer.bonus}
-                            </div>
-                            <div class="flex items-center justify-center text-gray-300">
-                                <i class="fas fa-bolt text-primary mr-2"></i>
-                                <span>${offer.speed}</span>
+                            <div class="flex flex-col items-end">
+                                <span class="text-xs text-gray-400 mb-1">Осталось бонусов</span>
+                                <div class="text-lg font-bold ${bonusColorClass}">${offer.bonusCount}</div>
                             </div>
                         </div>
-                        
-                        <div class="space-y-3 mb-6">
+                    </div>
+                    
+                    <div class="offer-bonus mb-6 flex-1">
+                        <div class="text-3xl font-bold text-center mb-2" style="background: linear-gradient(135deg, ${offer.color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            ${offer.bonus}
+                        </div>
+                        <div class="flex items-center justify-center text-gray-300">
+                            <i class="fas fa-bolt text-primary mr-2"></i>
+                            <span>${offer.speed}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="offer-details mb-6">
+                        <div class="space-y-3">
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-400">Мин. депозит:</span>
                                 <span class="font-medium">${offer.minDeposit}</span>
@@ -1064,14 +1134,17 @@
                         </div>
                     </div>
                     
-                    <div>
+                    <div class="offer-footer mt-auto">
                         <button 
                             onclick="handleOfferClick(${offer.id}, '${offer.href}')"
                             class="w-full btn-primary py-3"
                             aria-label="Забрать бонус в ${offer.name}"
+                            ${offer.bonusCount === 0 ? 'disabled style="opacity: 0.6; cursor: not-allowed;"' : ''}
                         >
-                            <i class="fas fa-gift mr-2"></i>Забрать бонус
+                            <i class="fas fa-gift mr-2"></i>
+                            ${offer.bonusCount === 0 ? 'Бонусы закончились' : 'Забрать бонус'}
                         </button>
+                        ${offer.bonusCount === 0 ? '<p class="text-xs text-red-400 text-center mt-2">Бонусы закончились. Скоро появятся новые!</p>' : ''}
                     </div>
                 `;
                 
@@ -1144,22 +1217,6 @@
                     hours.toString().padStart(2, '0') + ':' + 
                     minutes.toString().padStart(2, '0') + ':' + 
                     seconds.toString().padStart(2, '0');
-                    
-                // Каждый час уменьшаем количество доступных офферов
-                if (seconds === 0 && minutes === 0 && hours < 23) {
-                    const availableOffersElement = document.getElementById('available-offers');
-                    if (availableOffersElement) {
-                        let current = parseInt(availableOffersElement.textContent);
-                        if (current > 1) {
-                            availableOffersElement.textContent = (current - 1).toString();
-                            
-                            // Обновляем прогресс бар
-                            const progressFill = document.querySelector('.progress-fill');
-                            const newWidth = 100 - ((parseInt(availableOffersElement.textContent) / 8) * 100);
-                            progressFill.style.width = newWidth + '%';
-                        }
-                    }
-                }
             }, 1000);
         }
 
