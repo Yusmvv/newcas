@@ -604,8 +604,6 @@
                     <h3 class="text-xl font-bold mb-3">Для всех стран</h3>
                     <p class="text-gray-400">Подбираем офферы специально для вашей страны. Никаких ограничений по геолокации.</p>
                 </div>
-                
-                <!-- Удален блок "Поддержка 24/7" -->
             </div>
         </section>
 
@@ -686,10 +684,6 @@
                             <span>Осталось мало мест</span>
                             <span>Места заканчиваются</span>
                         </div>
-                        <p class="text-gray-500 text-sm mt-3 text-center">
-                            <i class="fas fa-exclamation-circle text-red-400 mr-1"></i>
-                            Когда места закончатся — новые бонусы появятся только через 24 часа!
-                        </p>
                     </div>
                     
                     <!-- Основная CTA кнопка -->
@@ -702,7 +696,7 @@
                         </button>
                         <p class="text-gray-500 text-sm mt-4">
                             <i class="fas fa-clock text-red-400 mr-1"></i>
-                            Не откладывайте — следующие эксклюзивные предложения появятся только завтра
+                            Следующие эксклюзивные предложения появятся только завтра
                         </p>
                     </div>
                 </div>
@@ -811,6 +805,30 @@
             return [4, 15, 32, 7, 12, 28, 9, 18];
         }
         
+        // Разные типы бонусов для карточек
+        const bonusTypes = [
+            "Приветственный бонус",
+            "Бездепозитный бонус", 
+            "Кэшбек за неделю",
+            "Фриспины за регистрацию",
+            "Бонус на первый депозит",
+            "Эксклюзивный VIP-бонус",
+            "Бонус на день рождения",
+            "Акция выходного дня"
+        ];
+        
+        // Разные уровни бонусов
+        const bonusLevels = [
+            "100% + 200 FS",
+            "150% + 150 FS", 
+            "200% + 100 FS",
+            "120% + 250 FS",
+            "180% + 180 FS",
+            "250% + 75 FS",
+            "130% + 300 FS",
+            "170% + 120 FS"
+        ];
+        
         // Функция для определения класса цвета на основе количества
         function getBonusColorClass(count) {
             if (count < 10) {
@@ -837,7 +855,9 @@
                 rating: 4.8,
                 minDeposit: '500₽',
                 popular: true,
-                categories: ['cashback', 'fast']
+                categories: ['cashback', 'fast'],
+                bonusType: bonusTypes[0],
+                bonusLevel: bonusLevels[0]
             },
             {
                 id: 2,
@@ -852,7 +872,9 @@
                 rating: 4.9,
                 minDeposit: '300₽',
                 popular: true,
-                categories: ['fast', 'freespins']
+                categories: ['fast', 'freespins'],
+                bonusType: bonusTypes[1],
+                bonusLevel: bonusLevels[1]
             },
             {
                 id: 3,
@@ -866,7 +888,9 @@
                 color: 'from-green-500 to-emerald-500',
                 rating: 4.7,
                 minDeposit: '1000₽',
-                categories: ['cashback']
+                categories: ['cashback'],
+                bonusType: bonusTypes[2],
+                bonusLevel: bonusLevels[2]
             },
             {
                 id: 4,
@@ -881,7 +905,9 @@
                 rating: 4.6,
                 minDeposit: '200₽',
                 popular: true,
-                categories: ['fast', 'freespins']
+                categories: ['fast', 'freespins'],
+                bonusType: bonusTypes[3],
+                bonusLevel: bonusLevels[3]
             },
             {
                 id: 5,
@@ -895,7 +921,9 @@
                 color: 'from-yellow-500 to-amber-500',
                 rating: 4.5,
                 minDeposit: '500₽',
-                categories: ['nodeposit', 'freespins']
+                categories: ['nodeposit', 'freespins'],
+                bonusType: bonusTypes[4],
+                bonusLevel: bonusLevels[4]
             },
             {
                 id: 6,
@@ -909,7 +937,9 @@
                 color: 'from-red-600 to-pink-600',
                 rating: 4.8,
                 minDeposit: '100₽',
-                categories: ['cashback', 'nodeposit']
+                categories: ['cashback', 'nodeposit'],
+                bonusType: bonusTypes[5],
+                bonusLevel: bonusLevels[5]
             },
             {
                 id: 7,
@@ -923,7 +953,9 @@
                 color: 'from-gray-500 to-slate-500',
                 rating: 4.7,
                 minDeposit: '300₽',
-                categories: ['fast']
+                categories: ['fast'],
+                bonusType: bonusTypes[6],
+                bonusLevel: bonusLevels[6]
             },
             {
                 id: 8,
@@ -938,7 +970,9 @@
                 rating: 4.9,
                 minDeposit: '250₽',
                 popular: true,
-                categories: ['nodeposit']
+                categories: ['nodeposit'],
+                bonusType: bonusTypes[7],
+                bonusLevel: bonusLevels[7]
             }
         ];
 
@@ -1111,9 +1145,12 @@
                         </div>
                     </div>
                     
-                    <div class="offer-bonus mb-6 flex-1">
-                        <div class="text-3xl font-bold text-center mb-2" style="background: linear-gradient(135deg, ${offer.color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                            ${offer.bonus}
+                    <div class="offer-bonus mb-4 flex-1">
+                        <div class="text-2xl font-bold text-center mb-2" style="background: linear-gradient(135deg, ${offer.color}); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                            ${offer.bonusLevel}
+                        </div>
+                        <div class="text-lg font-semibold text-center text-gray-300 mb-3">
+                            ${offer.bonusType}
                         </div>
                         <div class="flex items-center justify-center text-gray-300">
                             <i class="fas fa-bolt text-primary mr-2"></i>
@@ -1130,6 +1167,10 @@
                             <div class="flex justify-between text-sm">
                                 <span class="text-gray-400">Верификация:</span>
                                 <span class="font-medium text-green-400">Упрощенная</span>
+                            </div>
+                            <div class="text-center text-sm text-gray-500 mt-2">
+                                <i class="fas fa-gift text-primary mr-1"></i>
+                                Дополнительно: ${offer.bonus}
                             </div>
                         </div>
                     </div>
